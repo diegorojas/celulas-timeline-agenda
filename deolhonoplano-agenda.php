@@ -17,6 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Plugin main class.
  */
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-donp-agenda.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-donp-thumbnail.php';
 
 /**
  * Initialize the plugin actions.
@@ -24,9 +25,14 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/class-donp-agenda.php';
 add_action( 'plugins_loaded', array( 'DONP_Agenda', 'get_instance' ) );
 
 /**
+ * Register activate.
+ */
+register_activation_hook( __FILE__, array( 'DONP_Agenda', 'activate' ) );
+
+/**
  * Plugin admin.
  */
-if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+if ( is_admin() ) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/admin/class-donp-agenda-admin.php';
 
 	add_action( 'plugins_loaded', array( 'DONP_Agenda_Admin', 'get_instance' ) );
@@ -34,4 +40,8 @@ if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 
 function donp_calendar() {
 	echo DONP_Agenda::calendar();
+}
+
+function donp_timeline() {
+	echo DONP_Agenda::timeline();
 }

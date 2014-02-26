@@ -34,3 +34,7 @@ Usar a seguinte função no lugar do loop:
 	if ( ! empty( $_event_end ) ) {
 		echo date( 'd-m-Y H:i', $_event_end );
 	}
+
+## Exibir a timeline ##
+
+	<?php donp_timeline(); ?>

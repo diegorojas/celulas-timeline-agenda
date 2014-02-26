@@ -17,10 +17,12 @@ class DONP_Agenda {
 	private function __construct() {
 		add_action( 'after_setup_theme', array( $this, 'post_thumbnails_support' ) );
 		add_action( 'init', array( $this, 'agenda_post_type' ) );
+		add_action( 'init', array( $this, 'agenda_taxonomy' ) );
 		add_action( 'init', array( $this, 'rewrite_rules' ) );
 		add_filter( 'query_vars', array( $this, 'query_vars' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ) );
 		add_filter( 'template_include', array( $this, 'template_loader' ) );
+		add_action( 'wp_head', array( $this, 'i8fix' ), 999 );
 	}
 
 	/**
@@ -46,12 +48,20 @@ class DONP_Agenda {
 			wp_enqueue_script( 'events-calendar', plugins_url( 'assets/js/calendar.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), '', true );
 			wp_enqueue_style( 'events-calendar-styles', plugins_url( 'assets/css/calendar.css', plugin_dir_path( __FILE__ ) ), array(), '' );
 		}
+
+		wp_enqueue_style( 'timeline-styles', plugins_url( 'assets/css/timeline.css', plugin_dir_path( __FILE__ ) ), array(), '' );
+	}
+
+	public function i8fix() {
+		echo '<!--[if lt IE 9]>' . PHP_EOL;
+		echo '<link href="' . plugins_url( 'assets/css/ie8fix.css', plugin_dir_path( __FILE__ ) ) . '" rel="stylesheet" type="text/css" />' . PHP_EOL;
+		echo '<![endif]-->' . PHP_EOL;
 	}
 
 	/**
 	 * Add Agenda Post Type.
 	 */
-	public function agenda_post_type() {
+	public static function agenda_post_type() {
 		$labels = array(
 			'name'               => __( 'Agenda', 'donp-agenda' ),
 			'singular_name'      => __( 'Agenda', 'donp-agenda' ),
@@ -88,6 +98,41 @@ class DONP_Agenda {
 		);
 
 		register_post_type( 'agenda', $args );
+	}
+
+	public static function agenda_taxonomy() {
+		$labels = array(
+			'name'              => __( 'Categorias', 'donp-agenda' ),
+			'singular_name'     => __( 'Categoria', 'donp-agenda' ),
+			'search_items'      => __( 'Procurar categoria', 'donp-agenda' ),
+			'all_items'         => __( 'Todas as categorias', 'donp-agenda' ),
+			'parent_item'       => __( 'Categoria pai', 'donp-agenda' ),
+			'parent_item_colon' => __( 'Categoria pai:', 'donp-agenda' ),
+			'edit_item'         => __( 'Editar categoria', 'donp-agenda' ),
+			'update_item'       => __( 'Atualizar categoria', 'donp-agenda' ),
+			'add_new_item'      => __( 'Adicionar nova categoria', 'donp-agenda' ),
+			'new_item_name'     => __( 'Novo nome de categoria', 'donp-agenda' ),
+			'menu_name'         => __( 'Categorias', 'donp-agenda' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud'     => true,
+		);
+
+		register_taxonomy( 'agenda-categoria', array( 'agenda' ), $args );
+	}
+
+	public static function activate() {
+		self::agenda_post_type();
+		self::agenda_taxonomy();
+
+		flush_rewrite_rules();
 	}
 
 	/**
@@ -363,6 +408,64 @@ class DONP_Agenda {
 		$html .= self::generator( $current_month, $current_year );
 
 		return $html;
+	}
+
+	public static function timeline() {
+		wp_enqueue_script( 'mCustomScrollbar', plugins_url( 'assets/js/jquery.mCustomScrollbar.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), '', true );
+		wp_enqueue_script( 'jquery-easing', plugins_url( 'assets/js/jquery.easing.1.3.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), '', true );
+		wp_enqueue_script( 'jquery-timeline', plugins_url( 'assets/js/jquery.timeline.min.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), '', true );
+		wp_enqueue_script( 'timeline-init', plugins_url( 'assets/js/timeline-init.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), '', true );
+
+		$resizer         = DONP_Thumbnail::get_instance();
+		$category_colors = get_option( 'agenda_category_meta' );
+		$timeline_args   = array(
+			'post_type'      => 'agenda',
+			'posts_per_page' => -1,
+			'meta_key'       => 'event_start',
+			'meta_compare'   => 'BETWEEN',
+			'meta_value'     => array( strtotime( 'now' ), strtotime( '+3 week' ) ),
+			'orderby'        => 'meta_value_num',
+			'order'          => 'ASC'
+		);
+		$timeline_query = new WP_Query( $timeline_args );
+
+		if ( $timeline_query->have_posts() ) :
+
+			?>
+			<div class="timelineLoader">
+				<img src="<?php echo plugins_url( 'assets/images/timeline/loadingAnimation.gif', plugin_dir_path( __FILE__ ) ) ?>" />
+			</div>
+
+			<div id="timeline" class="timelineLight tl">
+				<?php
+					while ( $timeline_query->have_posts() ) :
+						$timeline_query->the_post();
+						$_event_start = get_post_meta( get_the_ID(), 'event_start', true );
+						$event_start = date_i18n( 'd \d\e F', strtotime( date( 'Y-m-d', $_event_start ) ) );
+						$category = get_the_terms( get_the_ID(), 'agenda-categoria' );
+						$color = '#1a86ac';
+						if ( is_array( $category ) ) {
+							$term = current( $category );
+							$term_id = $term->term_id;
+							$color = ( is_array( $category_colors ) && isset( $category_colors[ $term_id ] ) ) ? $category_colors[ $term_id ] : '#1a86ac';
+						}
+				?>
+					<div class="item" data-id="<?php echo date( 'd/m/Y', $_event_start ); ?>" data-description="<?php the_title(); ?>">
+						<?php if ( has_post_thumbnail() ) : ?>
+							<a class="image_rollover_bottom" data-description="<?php _e( 'Ver detalhes', 'donp-agenda' ); ?>" href="<?php the_permalink(); ?>">
+								<img src="<?php echo $resizer->process( wp_get_attachment_url( get_post_thumbnail_id() ), 200, 200, true ); ?>" alt="<?php the_title(); ?>" />
+							</a>
+						<?php endif; ?>
+						<div style="border-top: 5px solid <?php echo esc_attr( $color ); ?>"></div>
+						<h2><?php echo $event_start; ?></h2>
+						<h3><?php the_title(); ?></h3>
+						<span><?php echo wp_trim_words( get_the_excerpt(), 25 ); ?></span>
+						<a class="read_more" href="<?php the_permalink(); ?>"><?php _e( 'Leia mais' ); ?></a>
+					</div>
+				<?php endwhile; ?>
+			</div>
+		<?php endif; ?>
+		<?php wp_reset_postdata();
 	}
 
 	public function template_loader( $template ) {
