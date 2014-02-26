@@ -1,0 +1,94 @@
+#calendar {
+	margin-bottom: 20px;
+}
+
+#calendar table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	text-align: left;
+}
+
+#calendar .calendar {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ccc #bbb #aaa;
+	background: #F3F3F3;
+	color: #000;
+}
+
+#calendar th {
+	background: #fff;
+	border: 1px solid #ccc;
+	text-align: center;
+	width: 14.28%;
+}
+
+#calendar td {
+	border: 1px solid #ccc;
+	padding: 3px;
+	vertical-align: top;
+}
+
+#calendar .calendar-day-wrap {
+	min-height: 100px;
+}
+
+#calendar .calendar-day {
+	background: #fff;
+}
+
+#calendar .today {
+	background: #fcc;
+}
+
+#calendar .day-number {
+	text-align: right;
+}
+
+#calendar .calendar-event {
+	background: #333;
+	border: 1px solid #000;
+	color: #fff;
+	display: block;
+	font-size: 12px;
+	line-height: 18px;
+	padding: 4px;
+	margin-bottom: 2px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-text-shadow: none;
+	-moz-text-shadow: none;
+	text-shadow: none;
+}
+
+#calendar.calendar-event:hover {
+	background: #eee;
+	border-color: #ddd;
+	color: #333;
+	text-decoration: none;
+}
+
+#calendar-form {
+	margin: 0 0 20px;
+}
+
+#calendar-form input[type="submit"] {
+	margin: 3px 0 0;
+}
+
+#calendar-form-month {
+	width: 120px;
+	margin: 0 10px;
+}
+
+#calendar-form-year {
+	width: 90px;
+	margin: 0;
+}
+
+#calendar-navigation h3 {
+	margin: 0 0 10px;
+	text-align: center;
+}
