@@ -11,6 +11,7 @@
 
 #timeline h2 {
 	font-size:24px;
+	padding-top: 10px;
 }
 #timeline h3 {
 	font-size:18px;
@@ -174,14 +175,14 @@ a.image_rollover_left img {
 
 /* single item (margines set from javascript) */
 .timelineLight .item {
-	height:475px;
+	min-height:310px;
 	text-align:center;
-	background:url('../images/timeline/background-white.jpg') repeat;
-	color:#545454;
+	background:#fff;
+	color:#666;
 	-moz-box-shadow: -3px 1px 6px rgba(0,0,0,0.4);
 	-webkit-box-shadow: -3px 1px 6px rgba(0,0,0,0.4);
 	box-shadow: -3px 1px 6px rgba(0,0,0,0.4);
-	width:200px;
+	width:230px;
 }
 .timelineLight .item.item_node_hover {
 	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.9);
@@ -205,18 +206,18 @@ a.image_rollover_left img {
 	height:150px;
 }
 .timelineLight .item .read_more {
-	display:block;
-	padding:2px 8px 2px 10px;
-	font-size:14px;
-	font-weight:bold;
-	float:right;
-	color:#ffffff;
-	background: rgba(0,0,0,0.35);
+	color:#999;
 	cursor:pointer;
-	text-transform:uppercase;
+	background:url('../images/timeline/read-more.png') no-repeat;
+	position: absolute;
+	padding: 10px 22px 10px 15px;
+	font-size: 1em;
+	margin: 5px 0 10px 0; 
+	bottom: 5px;
+	right: 10px;
 }
 .timelineLight .item .read_more:hover {
-	background:rgb(26,134,172);
+	color: #333;
 	text-decoration: none;
 }
 /* ----------------------------------------- */
@@ -281,9 +282,15 @@ a.image_rollover_left img {
 }
 /* ----------------------------------------- */
 
+.timeline_items_wrapper {
+	position: relative;
+}
+
 /* left/right controles */
 .timelineLight .t_controles {
-	margin:10px auto;
+	margin:-200px auto 10px auto;
+	position: absolute;
+	width: 100%;
 	text-align:center;
 }
 .timelineLight .t_left,
@@ -297,6 +304,7 @@ a.image_rollover_left img {
 .timelineLight .t_left,
 .timelineLight .t_left:hover:active {
 	background: url('../images/timeline/big-arrow.png') no-repeat left top;
+	float: left;
 }
 .timelineLight .t_left:hover {
 	background: url('../images/timeline/big-arrow.png') no-repeat left bottom;
@@ -305,6 +313,7 @@ a.image_rollover_left img {
 .timelineLight .t_right,
 .timelineLight .t_right:hover:active{
 	background: url('../images/timeline/big-arrow.png') no-repeat right top;
+	float: right;
 }
 
 .timelineLight .t_right:hover {
