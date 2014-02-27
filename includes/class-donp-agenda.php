@@ -459,7 +459,7 @@ class DONP_Agenda {
 						<div style="border-top: 5px solid <?php echo esc_attr( $color ); ?>"></div>
 						<h2><?php echo $event_start; ?></h2>
 						<h3><?php the_title(); ?></h3>
-						<span><?php echo wp_trim_words( get_the_excerpt(), 25 ); ?></span>
+						<span><?php echo wp_trim_words( get_the_content(), 225 ); ?></span>
 						<a class="read_more" href="<?php the_permalink(); ?>"><?php _e( 'Leia mais' ); ?></a>
 					</div>
 				<?php endwhile; ?>
