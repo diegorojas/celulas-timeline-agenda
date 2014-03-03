@@ -192,7 +192,7 @@ a.image_rollover_left img {
 /* ----- content - non-plugin elements ----- */
 .timelineLight .item img {
 	margin-top:0;
-	width:200px;
+	width:100%;
 }
 
 .timelineLight .con_borderImage {
@@ -212,7 +212,7 @@ a.image_rollover_left img {
 	position: absolute;
 	padding: 10px 22px 10px 15px;
 	font-size: 1em;
-	margin: 5px 0 10px 0; 
+	margin: 5px 0 10px 0;
 	bottom: 5px;
 	right: 10px;
 }
