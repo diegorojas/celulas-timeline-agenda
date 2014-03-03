@@ -15,7 +15,7 @@ jQuery.fn.conRollover = function(type) {
 	jQuery(this).hover(function(){
 		jQuery(this).find('.image_roll_zoom').stop(true, true).animate({left: lend, top:tend},200);
 		jQuery(this).find('.image_roll_glass').stop(true, true).fadeIn(200);
-    },function() {
+	},function() {
 		jQuery(this).find('.image_roll_zoom').stop(true).animate({left:lstart, top:tstart},200);
 		jQuery(this).find('.image_roll_glass').stop(true, true).fadeOut(200);
 	});
@@ -33,8 +33,16 @@ jQuery(window).load(function() {
 });
 
 jQuery(window).load(function() {
+	function addZero( num ) {
+		return ( num >= 0 && num < 10 ) ? '0' + num : num + '';
+	}
+
+	var now = new Date(),
+		strDate = addZero( now.getDate() ) + '/' + addZero( now.getMonth() + 1 ) + '/' + now.getFullYear();
+
 	jQuery( '#timeline' ).timeline({
-		startItem: 'first',
+		startItem: strDate,
 		categories: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro']
 	});
 });
+
