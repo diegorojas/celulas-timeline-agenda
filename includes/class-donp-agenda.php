@@ -423,7 +423,7 @@ class DONP_Agenda {
 			'posts_per_page' => -1,
 			'meta_key'       => 'event_start',
 			'meta_compare'   => 'BETWEEN',
-			'meta_value'     => array( strtotime( 'now' ), strtotime( '+3 week' ) ),
+			'meta_value'     => array( strtotime( '-1 month' ), strtotime( '+1 month' ) ),
 			'orderby'        => 'meta_value_num',
 			'order'          => 'ASC'
 		);
@@ -453,7 +453,7 @@ class DONP_Agenda {
 					<div class="item" data-id="<?php echo date( 'd/m/Y', $_event_start ); ?>" data-description="<?php the_title(); ?>">
 						<?php if ( has_post_thumbnail() ) : ?>
 							<a class="image_rollover_bottom" data-description="<?php _e( 'Ver detalhes', 'donp-agenda' ); ?>" href="<?php the_permalink(); ?>">
-								<img src="<?php echo $resizer->process( wp_get_attachment_url( get_post_thumbnail_id() ), 200, 200, true ); ?>" alt="<?php the_title(); ?>" />
+								<img src="<?php echo $resizer->process( wp_get_attachment_url( get_post_thumbnail_id() ), 230, 150, true ); ?>" alt="<?php the_title(); ?>" />
 							</a>
 						<?php endif; ?>
 						<div style="border-top: 5px solid <?php echo esc_attr( $color ); ?>"></div>
