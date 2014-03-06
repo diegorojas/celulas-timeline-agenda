@@ -66,8 +66,8 @@ a.image_rollover_left img {
 
 /* fixed line holder */
 .timelineLight .timeline_line {
-	margin-top:10px;
-	margin-bottom:10px;
+	/*margin-top:10px;
+	margin-bottom:10px;*/
 	width:900px;
 }
 
@@ -175,7 +175,7 @@ a.image_rollover_left img {
 
 /* single item (margines set from javascript) */
 .timelineLight .item {
-	min-height:310px;
+	height:265px;
 	text-align:center;
 	background:#fff;
 	color:#666;
@@ -203,7 +203,7 @@ a.image_rollover_left img {
 	display:block;
 	font-size: 13px;
 	margin:0px 20px 10px;
-	height:150px;
+	/*height:150px;*/
 }
 .timelineLight .item .read_more {
 	color:#999;
