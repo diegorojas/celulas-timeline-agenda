@@ -177,12 +177,13 @@ class DONP_Agenda {
 	}
 
 	protected static function get_years() {
-		$current = date( 'Y' );
+		$years = array();
+		$start = date( 'Y', strtotime( '-5 year' ) );
+		$end   = date( 'Y', strtotime( '+5 year' ) );
 
-		$years = array(
-			$current,
-			$current + 1
-		);
+		for ( $year = $start; $year <= $end; $year++ ) {
+			$years[] = $year;
+		}
 
 		return $years;
 	}
