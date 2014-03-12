@@ -343,6 +343,16 @@ class DONP_Agenda {
 		return $calendar;
 	}
 
+	protected static function get_agenda_url( $year, $month ) {
+		$permalink = get_option( 'permalink_structure' );
+
+		if ( $permalink ) {
+			return home_url( 'agenda/' ) . $year . '/' . $month;
+		} else {
+			return add_query_arg( array( 'post_type' => 'agenda', 'calendar_year' => $year, 'calendar_month' => $month ), esc_url( home_url() ) );
+		}
+	}
+
 	public static function navigation( $current_month, $current_year ) {
 		$months = self::months_i18n();
 		$years  = self::get_years();
@@ -383,11 +393,11 @@ class DONP_Agenda {
 
 		$html .= '<div id="calendar-navigation" class="clearfix">';
 		$html .= '<div class="row">';
-		$html .= '<div class="col-md-3"><a class="btn btn-primary pull-left" href="' . home_url( 'agenda/' ) . $last_year . '/' . $last_month . '">&laquo; ' . $months[ $last_month ] . ' ' . $last_year . '</a></div>';
+		$html .= '<div class="col-md-3"><a class="btn btn-primary pull-left" href="' . self::get_agenda_url( $last_year, $last_month ) . '">&laquo; ' . $months[ $last_month ] . ' ' . $last_year . '</a></div>';
 
 		$html .= '<div class="col-md-6"><h3>' . $months[ $current_month ] . ' ' . $current_year . '</h3></div>';
 
-		$html .= '<div class="col-md-3"><a class="btn btn-primary pull-right" href="' . home_url( 'agenda/' ) . $next_year . '/' . $next_month . '">' . $months[ $next_month ] . ' ' . $next_year . ' &raquo;</a></div>';
+		$html .= '<div class="col-md-3"><a class="btn btn-primary pull-right" href="' . self::get_agenda_url( $next_year, $next_month ) . '">' . $months[ $next_month ] . ' ' . $next_year . ' &raquo;</a></div>';
 		$html .= '</div>';
 		$html .= '</div>';
 
