@@ -349,13 +349,15 @@ class DONP_Agenda {
 		if ( $permalink ) {
 			return home_url( 'agenda/' ) . $year . '/' . $month;
 		} else {
-			return add_query_arg( array( 'post_type' => 'agenda', 'calendar_year' => $year, 'calendar_month' => $month ), esc_url( home_url() ) );
+			return add_query_arg( array( 'post_type' => 'agenda', 'calendar_year' => $year, 'calendar_month' => $month ), esc_url( home_url( '/' ) ) );
 		}
 	}
 
 	public static function navigation( $current_month, $current_year ) {
-		$months = self::months_i18n();
-		$years  = self::get_years();
+		$permalink = get_option( 'permalink_structure' );
+		$months    = self::months_i18n();
+		$years     = self::get_years();
+		$method    = ( $permalink ) ? 'post' : 'get';
 
 		$last_month = $current_month - 1;
 		$next_month = $current_month + 1;
@@ -375,7 +377,10 @@ class DONP_Agenda {
 			$next_year = $current_year;
 		}
 
-		$html = '<form action="" method="post" id="calendar-form" class="form-inline">';
+		$html = '<form action="' . esc_url( home_url( '/' ) ) . '" method="' . $method . '" id="calendar-form" class="form-inline">';
+		if ( ! $permalink ) {
+			$html .= '<input id="post-type-agenda" type="hidden" name="post_type" value="agenda" />';
+		}
 		$html .= '<select name="calendar_year" id="calendar-form-year">';
 		foreach ( $years as $year ) {
 			$form_current_year = ( $current_year == $year ) ? 'selected="selected"' : '';

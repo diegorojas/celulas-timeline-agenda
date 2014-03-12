@@ -1,10 +1,13 @@
 jQuery(document).ready(function($) {
-    $('#calendar-form').on('submit', function(e) {
-        e.preventDefault();
+	if ( $('#post-type-agenda').length === 0 ) {
+		$('#calendar-form').on('submit', function(e) {
+			e.preventDefault();
 
-        var year = $('#calendar-form-year').val(),
-            month = $('#calendar-form-month').val();
+			var year = $('#calendar-form-year').val(),
+				month = $('#calendar-form-month').val(),
+				url   = $(this).attr('action');
 
-        window.location = '/agenda/' + year + '/' + month + '/';
-    });
+			window.location = url + 'agenda/' + year + '/' + month + '/';
+		});
+	}
 });
