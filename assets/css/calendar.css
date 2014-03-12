@@ -47,13 +47,13 @@
 }
 
 #calendar .calendar-event {
-	background: #333;
-	border: 1px solid #000;
-	color: #fff;
+	background: #C9C9C9;
+	border: 1px solid #333;
+	color: #333;
 	display: block;
 	font-size: 12px;
 	line-height: 18px;
-	padding: 4px;
+	padding: 5px;
 	margin-bottom: 2px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -90,5 +90,24 @@
 
 #calendar-navigation h3 {
 	margin: 0 0 10px;
+	text-align: center;
+}
+
+.left {
+	float: left;
+	width: 20%;
+	text-align: center;
+}
+
+.center {
+	width: 60%;
+	margin: 0 auto;
+	float: left;
+	text-align: center;
+}
+
+.right {
+	float: left;
+	width: 20%;
 	text-align: center;
 }

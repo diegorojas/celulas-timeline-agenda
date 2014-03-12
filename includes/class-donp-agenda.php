@@ -393,16 +393,16 @@ class DONP_Agenda {
 			$html .= '<option ' . $form_current_month . 'value="' . $key . '">' . $month . '</option>';
 		}
 		$html .= '</select>';
-		$html .= '<input type="submit" value="consultar" class="btn btn-primary" />';
+		$html .= '<input type="submit" value="consultar" class="btn btn-primary btn-consult" />';
 		$html .= '</form>';
 
 		$html .= '<div id="calendar-navigation" class="clearfix">';
 		$html .= '<div class="row">';
-		$html .= '<div class="col-md-3"><a class="btn btn-primary pull-left" href="' . self::get_agenda_url( $last_year, $last_month ) . '">&laquo; ' . $months[ $last_month ] . ' ' . $last_year . '</a></div>';
+		$html .= '<div class="col-md-3 left"><a class="btn btn-primary pull-left" href="' . self::get_agenda_url( $last_year, $last_month ) . '">&laquo; ' . $months[ $last_month ] . ' ' . $last_year . '</a></div>';
 
-		$html .= '<div class="col-md-6"><h3>' . $months[ $current_month ] . ' ' . $current_year . '</h3></div>';
+		$html .= '<div class="col-md-6 center"><h3>' . $months[ $current_month ] . ' ' . $current_year . '</h3></div>';
 
-		$html .= '<div class="col-md-3"><a class="btn btn-primary pull-right" href="' . self::get_agenda_url( $next_year, $next_month ) . '">' . $months[ $next_month ] . ' ' . $next_year . ' &raquo;</a></div>';
+		$html .= '<div class="col-md-3 right"><a class="btn btn-primary pull-right" href="' . self::get_agenda_url( $next_year, $next_month ) . '">' . $months[ $next_month ] . ' ' . $next_year . ' &raquo;</a></div>';
 		$html .= '</div>';
 		$html .= '</div>';
 
