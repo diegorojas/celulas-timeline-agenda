@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: De Olho no Plano - Agenda
- * Plugin URI:  http://deolhonoplano.org.br/
- * Description: Agenda.
+ * Plugin Name: Celulas - Agenda
+ * Plugin URI:  http://moverjuntos.org/
+ * Description: Agenda com timeline
  * Version:     1.0.0
  * Author:      Brasa
  * Author URI:  http://brasa.art.br/
